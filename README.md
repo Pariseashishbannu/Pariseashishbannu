@@ -171,8 +171,7 @@ Indian context rather than translated into it.
 
 </div>
 
-> ⚙️ Requires a one-time GitHub Action — see `snake.yml` and the setup notes below. Until that Action has run once, this section renders blank.
-
+>
 <br/>
 
 <img src="https://capsule-render.vercel.app/api?type=transparent&color=2E9EF7&height=2&section=header" width="100%"/>
