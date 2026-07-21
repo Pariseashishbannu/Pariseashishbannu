@@ -1,85 +1,116 @@
 <div align="center">
 
-<img src="https://capsule-render.vercel.app/api?type=waving&color=0:0F2027,50:2C5364,100:2E9EF7&height=220&section=header&text=Parise%20Ashish%20(Bannu)&fontSize=42&fontColor=ffffff&animation=fadeIn&fontAlignY=38&desc=Python%20Backend%20Developer%20%7C%20AI%2FML%20Engineer%20%7C%20Sovereign%20Tech%20Builder&descAlignY=58&descSize=18" width="100%"/>
+<img src="https://capsule-render.vercel.app/api?type=waving&color=0:0F0C29,25:302B63,50:24243E,75:1A2980,100:2E9EF7&height=280&section=header&text=Namaste,%20I'm%20Bannu%20%F0%9F%91%8B&fontSize=46&fontColor=ffffff&animation=fadeIn&fontAlignY=35&desc=Python%20Backend%20Developer%20%E2%80%A2%20AI%2FML%20Engineer%20%E2%80%A2%20Sovereign%20Tech%20Builder&descAlignY=52&descSize=19&descAlign=50" width="100%"/>
 
-<img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=22&duration=3000&pause=800&color=2E9EF7&center=true&vCenter=true&width=700&lines=FastAPI+%2B+Django%2FDRF+Backend+Developer;Building+PATER+AI+%E2%80%94+Telugu+Catholic+Theological+AI;Architecting+BharatMind+%E2%80%94+Sovereign+Indian+LLM;Engineering+VEGA-OS+%7C+VEGA-1+%7C+PYRA+%7C+VARL;Docker+%7C+PostgreSQL+%7C+ML+Pipelines" alt="Typing SVG" />
+<img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=23&duration=2800&pause=900&color=2E9EF7&center=true&vCenter=true&width=750&lines=Building+PATER+AI+%E2%80%94+Telugu+Catholic+Theological+AI;Architecting+BharatMind+%E2%80%94+Sovereign+Indian+LLM;Engineering+VEGA-OS+%7C+VEGA-1+%7C+PYRA+%7C+VARL;FastAPI+%2B+Django%2FDRF+%2B+PostgreSQL+%2B+Docker;Carnatic+Musician+%7C+Telugu+Liturgical+Tech" alt="Typing SVG" />
 
 <br/>
 
-<img src="https://komarev.com/ghpvc/?username=Pariseashishbannu&label=Profile%20Views&color=2E9EF7&style=flat" alt="Profile Views"/>
-<img src="https://img.shields.io/github/followers/Pariseashishbannu?label=Followers&style=flat&color=2E9EF7" alt="Followers"/>
-<img src="https://img.shields.io/badge/Location-Hyderabad%20%7C%20Bhadrachalam-2E9EF7?style=flat" alt="Location"/>
-<img src="https://img.shields.io/badge/Status-Building%20BharatMind%20AI-brightgreen?style=flat" alt="Status"/>
+<a href="https://www.youtube.com/@RCMChurchBhadrachalam"><img src="https://img.shields.io/badge/YouTube-RCM_Church_Bhadrachalam-FF0000?style=for-the-badge&logo=youtube&logoColor=white" /></a>
+<a href="https://github.com/Pariseashishbannu"><img src="https://img.shields.io/badge/GitHub-Pariseashishbannu-181717?style=for-the-badge&logo=github&logoColor=white" /></a>
+<img src="https://img.shields.io/badge/Location-Hyderabad%20%7C%20Bhadrachalam-2E9EF7?style=for-the-badge&logo=googlemaps&logoColor=white" alt="Location"/>
+
+<br/><br/>
+
+<img src="https://komarev.com/ghpvc/?username=Pariseashishbannu&label=Profile%20Views&color=2E9EF7&style=for-the-badge" alt="Profile Views"/>
+<img src="https://img.shields.io/github/followers/Pariseashishbannu?label=Followers&style=for-the-badge&color=2E9EF7&logo=github" alt="Followers"/>
+<img src="https://img.shields.io/badge/Status-Building%20BharatMind%20AI-brightgreen?style=for-the-badge" alt="Status"/>
 
 </div>
 
----
+<br/>
 
-### 🧑‍💻 About Me
+<img src="https://capsule-render.vercel.app/api?type=transparent&color=2E9EF7&height=2&section=header" width="100%"/>
+
+## `whoami`
 
 ```yaml
-name: Parise Ashish (Bannu)
-role: Python Backend Developer & AI/ML Engineer
-location: Hyderabad / Bhadrachalam, Telangana, India
-stack: [FastAPI, Django/DRF, PostgreSQL, Docker, Celery]
-focus: LLM fine-tuning, document intelligence, computer vision
-mission: Building sovereign, culturally-intelligent AI for India
-current_goal: MSc Computer Science @ Sapienza University of Rome (2027)
-interests: [Carnatic music composition, Telugu Catholic liturgical tech]
-availability: Open to freelance / contract work (Toptal, Turing, Upwork)
+name:          Parise Ashish (Bannu)
+role:          Python Backend Developer & AI/ML Engineer
+based_in:      Hyderabad / Bhadrachalam, Telangana, India
+stack:         [FastAPI, Django/DRF, PostgreSQL, Docker, Celery, Redis]
+focus:         LLM fine-tuning · document intelligence · computer vision
+mission:       Building sovereign, culturally-intelligent AI for India
+next_chapter:  MSc Computer Science @ Sapienza University of Rome (2027)
+also_learning: Italian (targeting CILS B1, Dec 2026)
+off_duty:      Carnatic music composition · Telugu liturgical tech
+availability:  Open to freelance / contract work (Toptal · Turing · Upwork)
 ```
 
----
-
-### 🚀 Featured Projects
-
-<div align="center">
-
-<a href="https://github.com/Pariseashishbannu/pater-ai">
-<img src="https://github-readme-stats.vercel.app/api/pin/?username=Pariseashishbannu&repo=pater-ai&theme=tokyonight&hide_border=true&title_color=2E9EF7" />
-</a>
-<a href="https://github.com/Pariseashishbannu/bharatdoc">
-<img src="https://github-readme-stats.vercel.app/api/pin/?username=Pariseashishbannu&repo=bharatdoc&theme=tokyonight&hide_border=true&title_color=2E9EF7" />
-</a>
 <br/>
-<a href="https://github.com/Pariseashishbannu/ministerium">
-<img src="https://github-readme-stats.vercel.app/api/pin/?username=Pariseashishbannu&repo=ministerium&theme=tokyonight&hide_border=true&title_color=2E9EF7" />
-</a>
-<a href="https://github.com/Pariseashishbannu/bharatmind">
-<img src="https://github-readme-stats.vercel.app/api/pin/?username=Pariseashishbannu&repo=bharatmind&theme=tokyonight&hide_border=true&title_color=2E9EF7" />
-</a>
 
-</div>
+## 🚀 What I'm Building
 
-> ⚠️ Pin cards render blank until the target repo exists publicly under your account — swap `pater-ai` / `bharatdoc` / `ministerium` / `bharatmind` for your real repo slugs.
+<table width="100%">
+<tr>
+<td width="50%" valign="top">
+
+### 🙏 PATER AI
+Telugu Catholic theological AI assistant, fine-tuned on **Qwen2.5-72B**
+using a 4-tier ~34K sample dataset (**QLoRA r=32 + SFT + DPO**), with a
+custom desensitization corpus to fix over-refusal on religious language.
+
+`#LLM-FineTuning` `#QLoRA` `#DPO` `#Telugu-NLP`
+
+</td>
+<td width="50%" valign="top">
+
+### 📄 BharatDoc
+KYC / document-intelligence extraction API built on **PaddleOCR**, with
+production validators for PAN, GSTIN (Verhoeff), Aadhaar masking, and IFSC.
+
+`#OCR` `#FastAPI` `#DocumentAI` `#KYC`
+
+</td>
+</tr>
+<tr>
+<td width="50%" valign="top">
+
+### ⛪ Ministerium
+Telugu-first parish management platform — Django + React — built for the
+Diocese of Khammam, with a multi-provider AI layer (Groq / Gemini / Ollama /
+OpenRouter) powering community tools.
+
+`#Django` `#React` `#CommunityTech`
+
+</td>
+<td width="50%" valign="top">
+
+### 🇮🇳 BharatMind
+The consumer-facing vision for a culturally-intelligent Indian LLM —
+Telugu, South Indian literature, and multi-faith theology, native to
+Indian context rather than translated into it.
+
+`#SovereignAI` `#IndicLLM`
+
+</td>
+</tr>
+</table>
 
 <details>
-<summary><b>🔎 Project details (click to expand)</b></summary>
+<summary><b>🛰️ VEGA Sovereign Stack — long-term systems vision (click to expand)</b></summary>
 <br/>
 
-**PATER AI** — Telugu Catholic theological AI assistant. Fine-tuned Qwen2.5-72B with a 4-tier ~34K sample dataset (QLoRA + SFT + DPO), specifically addressing over-refusal on religious vocabulary.
-
-**BharatDoc** — KYC/document extraction API using PaddleOCR, with production-grade validators for PAN, GSTIN, Aadhaar, and IFSC.
-
-**Ministerium** — Parish management platform for diocese and church administration workflows.
-
-**BharatMind** — Vision for a culturally-intelligent Indian LLM covering Telugu, South Indian literature, and multi-faith theology.
-
-**VEGA Sovereign Stack** — `VEGA-OS` (military-grade, local-first OS: LUKS2, post-quantum crypto, SELinux MLS) · `VEGA-1` (AI accelerator ASIC) · `PYRA` (Python-native CUDA alternative) · `VARL` (agent-native runtime layer).
+| Layer | What it is |
+|---|---|
+| **VEGA-OS** | Military-grade, local-first OS — LUKS2, post-quantum crypto (CRYSTALS-Kyber/Dilithium), SELinux MLS, anti-forensics |
+| **VARL / Aegis** | Agent-native AI runtime layer sitting on top of VEGA-OS |
+| **VEGA-1** | AI accelerator ASIC — Processing-in-Memory, Sparse Activation Engine, RISC-V ISA, targeting 9× tokens/watt vs H100 |
+| **PYRA** | Python-native CUDA alternative — compiles through a hardware-agnostic IR to multiple backends |
 
 </details>
 
----
+<br/>
 
-### 🛠️ Tech Arsenal
+<img src="https://capsule-render.vercel.app/api?type=transparent&color=2E9EF7&height=2&section=header" width="100%"/>
 
-<div align="center">
-
-<img src="https://skillicons.dev/icons?i=python,fastapi,django,postgres,docker,redis,linux,git,githubactions,py,pytorch,opencv,bash,nginx,vscode&theme=dark" />
-
-</div>
+## 🛠️ Tech Arsenal
 
 <div align="center">
+
+<img src="https://skillicons.dev/icons?i=python,fastapi,django,postgres,docker,redis,linux,git,githubactions,pytorch,opencv,bash,nginx,vscode,react&theme=dark" />
+
+<br/><br/>
 
 ![Python](https://img.shields.io/badge/-Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
 ![FastAPI](https://img.shields.io/badge/-FastAPI-009688?style=for-the-badge&logo=fastapi&logoColor=white)
@@ -93,56 +124,98 @@ availability: Open to freelance / contract work (Toptal, Turing, Upwork)
 
 </div>
 
----
+<br/>
 
-### 📊 GitHub Analytics
+<img src="https://capsule-render.vercel.app/api?type=transparent&color=2E9EF7&height=2&section=header" width="100%"/>
+
+## 📊 GitHub Analytics
 
 <div align="center">
 
-<img height="165" src="https://github-readme-stats.vercel.app/api?username=Pariseashishbannu&show_icons=true&theme=tokyonight&hide_border=true&count_private=true" />
-<img height="165" src="https://github-readme-stats.vercel.app/api/top-langs/?username=Pariseashishbannu&layout=compact&theme=tokyonight&hide_border=true" />
+<img height="165" src="https://github-readme-stats.vercel.app/api?username=Pariseashishbannu&show_icons=true&theme=tokyonight&hide_border=true&count_private=true&bg_color=00000000&cache_seconds=86400" />
+<img height="165" src="https://github-readme-stats.vercel.app/api/top-langs/?username=Pariseashishbannu&layout=compact&theme=tokyonight&hide_border=true&bg_color=00000000&cache_seconds=86400" />
 
 <br/>
 
-<img src="https://github-readme-streak-stats.herokuapp.com/?user=Pariseashishbannu&theme=tokyonight&hide_border=true" />
+<img src="https://github-readme-streak-stats.herokuapp.com/?user=Pariseashishbannu&theme=tokyonight&hide_border=true&background=00000000" />
 
 <br/>
 
-<img src="https://github-readme-activity-graph.vercel.app/graph?username=Pariseashishbannu&theme=tokyo-night&hide_border=true&area=true" width="100%"/>
+<img src="https://github-readme-activity-graph.vercel.app/graph?username=Pariseashishbannu&theme=tokyo-night&hide_border=true&area=true&bg_color=00000000" width="100%"/>
 
 </div>
 
----
+> ⚠️ If any card above shows a blank box or "Something went wrong," it's the shared public Vercel instance hitting its rate limit — not your README. See the **Setup Notes** section at the bottom for the one-time self-host fix that makes these permanently reliable.
 
-### 🏆 Trophies
+<br/>
+
+## 🏆 Trophy Case
 
 <div align="center">
-<img src="https://github-profile-trophy.vercel.app/?username=Pariseashishbannu&theme=tokyonight&no-frame=true&row=1&column=6&margin-w=8" />
+<img src="https://github-profile-trophy.vercel.app/?username=Pariseashishbannu&theme=tokyonight&no-frame=true&no-bg=true&row=1&column=6&margin-w=10" />
 </div>
 
----
+<br/>
 
-### 🐍 Contribution Snake
+<img src="https://capsule-render.vercel.app/api?type=transparent&color=2E9EF7&height=2&section=header" width="100%"/>
+
+## 🐍 Contribution Snake
 
 <div align="center">
-<img src="https://raw.githubusercontent.com/Pariseashishbannu/Pariseashishbannu/output/github-contribution-grid-snake.svg" width="100%"/>
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Pariseashishbannu/Pariseashishbannu/output/github-contribution-grid-snake-dark.svg" />
+  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/Pariseashishbannu/Pariseashishbannu/output/github-contribution-grid-snake.svg" />
+  <img alt="contribution snake animation" src="https://raw.githubusercontent.com/Pariseashishbannu/Pariseashishbannu/output/github-contribution-grid-snake.svg" width="100%"/>
+</picture>
+
 </div>
 
-> ⚙️ **Snake animation requires one-time setup** — add the GitHub Action below (see setup notes at the bottom) to generate this automatically from your commit graph.
+> ⚙️ Requires a one-time GitHub Action — see `snake.yml` and the setup notes below. Until that Action has run once, this section renders blank.
 
----
+<br/>
 
-### 📫 Connect With Me
+<img src="https://capsule-render.vercel.app/api?type=transparent&color=2E9EF7&height=2&section=header" width="100%"/>
+
+## 📫 Let's Connect
 
 <div align="center">
 
 <a href="https://www.youtube.com/@RCMChurchBhadrachalam"><img src="https://img.shields.io/badge/YouTube-RCM_Church_Bhadrachalam-FF0000?style=for-the-badge&logo=youtube&logoColor=white" /></a>
-<a href="https://github.com/Pariseashishbannu"><img src="https://img.shields.io/badge/GitHub-Pariseashishbannu-181717?style=for-the-badge&logo=github&logoColor=white" /></a>
+<a href="https://github.com/Pariseashishbannu"><img src="https://img.shields.io/badge/GitHub-Follow-181717?style=for-the-badge&logo=github&logoColor=white" /></a>
 
 </div>
 
 <br/>
 
-<img src="https://capsule-render.vercel.app/api?type=waving&color=0:2E9EF7,100:0F2027&height=100&section=footer" width="100%"/>
+<div align="center">
+<i>"Building at the intersection of faith, code, and sovereignty."</i>
+</div>
 
-<p align="center"><i>"Building at the intersection of faith, code, and sovereignty."</i></p>
+<br/>
+
+<img src="https://capsule-render.vercel.app/api?type=waving&color=0:2E9EF7,100:0F0C29&height=150&section=footer" width="100%"/>
+
+<!--
+=====================================================================
+  SETUP NOTES — delete this comment block once everything is wired up
+=====================================================================
+
+1. SNAKE ANIMATION
+   - Add the included `snake.yml` to `.github/workflows/` in this repo.
+   - Settings → Actions → General → Workflow permissions → "Read and write permissions".
+   - Actions tab → run "Generate Snake Animation" manually once.
+   - Confirm the `output` branch now exists with the two SVGs at its root.
+
+2. STATS / STREAK / ACTIVITY GRAPH RELIABILITY
+   - The public github-readme-stats.vercel.app instance is shared by
+     everyone and gets rate-limited during peak hours (known, ongoing issue).
+   - Fix: fork github-readme-stats + github-readme-streak-stats + 
+     github-readme-activity-graph, deploy each to your own Vercel account,
+     add a GitHub PAT (repo + read:user scopes) as an env var, then swap
+     the vercel.app URLs above for your own deployment URLs.
+
+3. This repo (Pariseashishbannu/Pariseashishbannu) must be PUBLIC for
+   any of the badges, stats, or snake image to render at all.
+=====================================================================
+-->
