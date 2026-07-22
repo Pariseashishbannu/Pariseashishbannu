@@ -1,8 +1,8 @@
 <div align="center">
 
-<img src="https://capsule-render.vercel.app/api?type=waving&color=0:0F0C29,25:302B63,50:24243E,75:1A2980,100:2E9EF7&height=280&section=header&text=Namaste,%20I'm%20Bannu%20%F0%9F%91%8B&fontSize=46&fon[...]
+<img src="https://capsule-render.vercel.app/api?type=waving&color=0:0F0C29,25:302B63,50:24243E,75:1A2980,100:2E9EF7&height=280&section=header&text=Namaste,%20I'm%20Bannu%20%F0%9F%91%8B&fontSize=46&fontColor=ffffff" width="100%" />
 
-<img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=23&duration=2800&pause=900&color=2E9EF7&center=true&vCenter=true&width=750&lines=Building+PATER+AI+%E2%80%94+Telugu+Catho[...]
+<img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=23&duration=2800&pause=900&color=2E9EF7&center=true&vCenter=true&width=750&lines=Building+PATER+AI+%E2%80%94+Telugu+Catholic+LLM;Document+Intelligence+%26+KYC+Extraction;Sovereign,+Culturally-Intelligent+Indian+AI" width="100%" />
 
 <br/>
 
@@ -132,7 +132,7 @@ Indian context rather than translated into it.
 
 <div align="center">
 
-<img height="165" src="https://github-readme-stats.vercel.app/api?username=Pariseashishbannu&show_icons=true&theme=tokyonight&hide_border=true&count_private=true&bg_color=00000000&cache_seconds=86400"[...]
+<img height="165" src="https://github-readme-stats.vercel.app/api?username=Pariseashishbannu&show_icons=true&theme=tokyonight&hide_border=true&count_private=true&bg_color=00000000&cache_seconds=86400" />
 <img height="165" src="https://github-readme-stats.vercel.app/api/top-langs/?username=Pariseashishbannu&layout=compact&theme=tokyonight&hide_border=true&bg_color=00000000&cache_seconds=86400" />
 
 <br/>
@@ -145,7 +145,7 @@ Indian context rather than translated into it.
 
 </div>
 
-> ⚠️ If any card above shows a blank box or "Something went wrong," it's the shared public Vercel instance hitting its rate limit — not your README. See the **Setup Notes** section at the bottom[...]
+> ⚠️ If any card above shows a blank box or "Something went wrong," it's the shared public Vercel instance hitting its rate limit — not your README. See the **Setup Notes** section at the bottom.
 
 <br/>
 
