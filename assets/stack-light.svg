@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="330" viewBox="0 0 1200 330" role="img" aria-label="Tech stack: Models &amp; ML: PyTorch, Hugging Face, QLoRA · PEFT, SFT · DPO, PaddleOCR, OpenCV; Backend: Python, FastAPI, Django · DRF, Celery, SQLAlchemy 2, Alembic; Data &amp; Infra: PostgreSQL, Redis, MinIO · S3, Docker, Nginx, GitHub Actions; Security: mTLS, Open Policy Agent, YARA · eBPF, Semgrep · Bandit, Grype, Linux; Interface: React 19, Next.js, TypeScript, Vite, PWA, Groq · Ollama">
+<style>
+.serif{font-family:'Iowan Old Style','Palatino Linotype',Palatino,Georgia,'Noto Serif','DejaVu Serif',serif} .sans{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans',Helvetica,Arial,sans-serif} .mono{font-family:ui-monospace,'SF Mono','JetBrains Mono',Menlo,Consolas,'DejaVu Sans Mono',monospace} .te{font-family:'Noto Sans Telugu','Nirmala UI','Telugu Sangam MN','Gautami',sans-serif}
+@keyframes draw{to{stroke-dashoffset:0}}
+@keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@keyframes blink{0%,49%{opacity:1}50%,100%{opacity:0}}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+.k{fill:none;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:1;animation:draw 1.6s cubic-bezier(.6,0,.2,1) forwards}
+.r{opacity:0;animation:rise .8s cubic-bezier(.2,.7,.2,1) forwards}
+.cur{animation:blink 1.1s steps(1) infinite}
+.pulse{animation:pulse 2.4s ease-in-out infinite}
+@media (prefers-reduced-motion:reduce){.k,.r{animation:none;opacity:1;stroke-dashoffset:0}.cur,.pulse{animation:none}}
+</style>
+<rect width="1200" height="330" rx="18" fill="#FBF8F2"/>
+<rect x="0.5" y="0.5" width="1199" height="329" rx="18" fill="none" stroke="#E3DACB"/>
+<g class="r" style="animation-delay:0.00s"><text x="56.0" y="66" class="mono" font-size="12.5" letter-spacing="1.6" fill="#B5690F">01</text><text x="56.0" y="98" class="serif" font-size="24" fill="#1C1813">Models &amp; ML</text>
+<text x="56.0" y="142" class="sans" font-size="16" fill="#6B6358">PyTorch</text>
+<text x="56.0" y="172" class="sans" font-size="16" fill="#6B6358">Hugging Face</text>
+<text x="56.0" y="202" class="sans" font-size="16" fill="#6B6358">QLoRA · PEFT</text>
+<text x="56.0" y="232" class="sans" font-size="16" fill="#6B6358">SFT · DPO</text>
+<text x="56.0" y="262" class="sans" font-size="16" fill="#6B6358">PaddleOCR</text>
+<text x="56.0" y="292" class="sans" font-size="16" fill="#6B6358">OpenCV</text>
+</g>
+<line x1="253.6" y1="48" x2="253.6" y2="282" stroke="#E3DACB"/>
+<g class="r" style="animation-delay:0.08s"><text x="273.6" y="66" class="mono" font-size="12.5" letter-spacing="1.6" fill="#B5690F">02</text><text x="273.6" y="98" class="serif" font-size="24" fill="#1C1813">Backend</text>
+<text x="273.6" y="142" class="sans" font-size="16" fill="#6B6358">Python</text>
+<text x="273.6" y="172" class="sans" font-size="16" fill="#6B6358">FastAPI</text>
+<text x="273.6" y="202" class="sans" font-size="16" fill="#6B6358">Django · DRF</text>
+<text x="273.6" y="232" class="sans" font-size="16" fill="#6B6358">Celery</text>
+<text x="273.6" y="262" class="sans" font-size="16" fill="#6B6358">SQLAlchemy 2</text>
+<text x="273.6" y="292" class="sans" font-size="16" fill="#6B6358">Alembic</text>
+</g>
+<line x1="471.2" y1="48" x2="471.2" y2="282" stroke="#E3DACB"/>
+<g class="r" style="animation-delay:0.16s"><text x="491.2" y="66" class="mono" font-size="12.5" letter-spacing="1.6" fill="#B5690F">03</text><text x="491.2" y="98" class="serif" font-size="24" fill="#1C1813">Data &amp; Infra</text>
+<text x="491.2" y="142" class="sans" font-size="16" fill="#6B6358">PostgreSQL</text>
+<text x="491.2" y="172" class="sans" font-size="16" fill="#6B6358">Redis</text>
+<text x="491.2" y="202" class="sans" font-size="16" fill="#6B6358">MinIO · S3</text>
+<text x="491.2" y="232" class="sans" font-size="16" fill="#6B6358">Docker</text>
+<text x="491.2" y="262" class="sans" font-size="16" fill="#6B6358">Nginx</text>
+<text x="491.2" y="292" class="sans" font-size="16" fill="#6B6358">GitHub Actions</text>
+</g>
+<line x1="688.8" y1="48" x2="688.8" y2="282" stroke="#E3DACB"/>
+<g class="r" style="animation-delay:0.24s"><text x="708.8" y="66" class="mono" font-size="12.5" letter-spacing="1.6" fill="#B5690F">04</text><text x="708.8" y="98" class="serif" font-size="24" fill="#1C1813">Security</text>
+<text x="708.8" y="142" class="sans" font-size="16" fill="#6B6358">mTLS</text>
+<text x="708.8" y="172" class="sans" font-size="16" fill="#6B6358">Open Policy Agent</text>
+<text x="708.8" y="202" class="sans" font-size="16" fill="#6B6358">YARA · eBPF</text>
+<text x="708.8" y="232" class="sans" font-size="16" fill="#6B6358">Semgrep · Bandit</text>
+<text x="708.8" y="262" class="sans" font-size="16" fill="#6B6358">Grype</text>
+<text x="708.8" y="292" class="sans" font-size="16" fill="#6B6358">Linux</text>
+</g>
+<line x1="906.4" y1="48" x2="906.4" y2="282" stroke="#E3DACB"/>
+<g class="r" style="animation-delay:0.32s"><text x="926.4" y="66" class="mono" font-size="12.5" letter-spacing="1.6" fill="#B5690F">05</text><text x="926.4" y="98" class="serif" font-size="24" fill="#1C1813">Interface</text>
+<text x="926.4" y="142" class="sans" font-size="16" fill="#6B6358">React 19</text>
+<text x="926.4" y="172" class="sans" font-size="16" fill="#6B6358">Next.js</text>
+<text x="926.4" y="202" class="sans" font-size="16" fill="#6B6358">TypeScript</text>
+<text x="926.4" y="232" class="sans" font-size="16" fill="#6B6358">Vite</text>
+<text x="926.4" y="262" class="sans" font-size="16" fill="#6B6358">PWA</text>
+<text x="926.4" y="292" class="sans" font-size="16" fill="#6B6358">Groq · Ollama</text>
+</g>
+</svg>

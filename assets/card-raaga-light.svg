@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="300" viewBox="0 0 600 300" role="img" aria-label="Raaga.AI — Composes Telugu songs on authentic Carnatic ragas — melody, lyrics, beats and vocals.">
+<style>
+.serif{font-family:'Iowan Old Style','Palatino Linotype',Palatino,Georgia,'Noto Serif','DejaVu Serif',serif} .sans{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans',Helvetica,Arial,sans-serif} .mono{font-family:ui-monospace,'SF Mono','JetBrains Mono',Menlo,Consolas,'DejaVu Sans Mono',monospace} .te{font-family:'Noto Sans Telugu','Nirmala UI','Telugu Sangam MN','Gautami',sans-serif}
+@keyframes draw{to{stroke-dashoffset:0}}
+@keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@keyframes blink{0%,49%{opacity:1}50%,100%{opacity:0}}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+.k{fill:none;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:1;animation:draw 1.6s cubic-bezier(.6,0,.2,1) forwards}
+.r{opacity:0;animation:rise .8s cubic-bezier(.2,.7,.2,1) forwards}
+.cur{animation:blink 1.1s steps(1) infinite}
+.pulse{animation:pulse 2.4s ease-in-out infinite}
+@media (prefers-reduced-motion:reduce){.k,.r{animation:none;opacity:1;stroke-dashoffset:0}.cur,.pulse{animation:none}}
+</style>
+<rect width="600" height="300" rx="18" fill="#FBF8F2"/>
+<rect x="0.5" y="0.5" width="599" height="299" rx="18" fill="#F4EFE6" stroke="#E3DACB"/>
+<rect x="0" y="40" width="3" height="28" fill="#B5690F"/>
+<text x="32" y="60" class="mono" font-size="13" letter-spacing="1.6" fill="#6B6358"><tspan fill="#B5690F">03</tspan>  ·  GENERATIVE AUDIO</text>
+<rect x="479.6" y="40" width="88.4" height="28" rx="14" fill="none" stroke="#E3DACB"/>
+<circle cx="494.6" cy="54" r="3.5" fill="#A69C8D"/>
+<text x="505.6" y="58.5" class="mono" font-size="12.5" letter-spacing="1.2" fill="#6B6358">PUBLIC</text>
+<text x="30" y="122" class="serif" font-size="42" letter-spacing="-.5" fill="#1C1813">Raaga.AI</text>
+<text x="32" y="158" class="sans" font-size="17" fill="#6B6358">Composes Telugu songs on authentic Carnatic</text>
+<text x="32" y="183" class="sans" font-size="17" fill="#6B6358">ragas — melody, lyrics, beats and vocals.</text>
+<line x1="32" y1="212" x2="568" y2="212" stroke="#E3DACB"/>
+<text x="32.0" y="250" class="mono" font-size="21" font-weight="600" fill="#B5690F">5</text>
+<text x="32.0" y="272" class="sans" font-size="13" fill="#6B6358">layer pipeline</text>
+<line x1="196.7" y1="230" x2="196.7" y2="272" stroke="#E3DACB"/>
+<text x="210.7" y="250" class="mono" font-size="21" font-weight="600" fill="#B5690F">raga·tala</text>
+<text x="210.7" y="272" class="sans" font-size="13" fill="#6B6358">validated theory</text>
+<line x1="375.3" y1="230" x2="375.3" y2="272" stroke="#E3DACB"/>
+<text x="389.3" y="250" class="mono" font-size="21" font-weight="600" fill="#B5690F">Celery</text>
+<text x="389.3" y="272" class="sans" font-size="13" fill="#6B6358">async render</text>
+</svg>
