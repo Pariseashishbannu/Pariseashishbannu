@@ -19,8 +19,8 @@ jobs:
         with:
           github_user_name: Pariseashishbannu
           outputs: |
-            dist/github-contribution-grid-snake.svg?color_snake=#0B8A45&color_dots=#E4EFE8,#A8E6BF,#5FD08D,#1FA85C,#0B7A3E
-            dist/github-contribution-grid-snake-dark.svg?palette=github-dark&color_snake=#FF4D5E&color_dots=#121B16,#154A2B,#1C7A45,#2BC46C,#3DFF8B
+            dist/github-contribution-grid-snake.svg?color_snake=#E11D48&color_dots=#E3EEF4,#A9D8EA,#5FB8DA,#1E8FBA,#0F6A8E
+            dist/github-contribution-grid-snake-dark.svg?palette=github-dark&color_snake=#FF3B5C&color_dots=#0A2233,#0E4A66,#1583A8,#39C6EE,#BFF3FF
 
       - name: Push snake svg to the output branch
         uses: crazy-max/ghaction-github-pages@v4
