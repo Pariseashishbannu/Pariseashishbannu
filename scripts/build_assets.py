@@ -1,206 +1,312 @@
 #!/usr/bin/env python3
-"""Generate the profile README's SVG artwork (dark + light variants).
+"""Generate the profile README's terminal-style SVG artwork.
 
 Run from the repo root:  python3 scripts/build_assets.py
+Needs:  pip install fonttools brotli uharfbuzz
 Edit PROJECTS / STACK below, re-run, commit the regenerated assets/.
+
+Text is converted to outlines (IBM Plex Mono and Anek Telugu, scripts/fonts,
+SIL OFL) because GitHub cannot load web fonts inside a README image.
 """
+import io
+import textwrap
 from pathlib import Path
 from xml.sax.saxutils import escape
 
-OUT = Path(__file__).resolve().parent.parent / "assets"
+import uharfbuzz as hb
+from fontTools.pens.svgPathPen import SVGPathPen
+from fontTools.pens.transformPen import TransformPen
+from fontTools.ttLib import TTFont
 
-THEMES = {
-    "dark": dict(bg="#0C0B0A", surface="#151311", line="#2B2723", text="#F2ECE3",
-                 muted="#948B7F", faint="#5E574E", accent="#E9A13B", accent2="#7FB2A6"),
-    "light": dict(bg="#FBF8F2", surface="#F4EFE6", line="#E3DACB", text="#1C1813",
-                  muted="#6B6358", faint="#A69C8D", accent="#B5690F", accent2="#3F7F72"),
+ROOT = Path(__file__).resolve().parent
+OUT = ROOT.parent / "assets"
+
+BG, BAR, LINE = "#0A0F0C", "#121B16", "#23402F"
+TEXT, DIM, GREEN, SHADOW, RED = "#DDF7E5", "#7FB596", "#3DFF8B", "#2FA866", "#FF4D5E"
+PROMPT = "bannu@vega:~$ "
+
+
+class Face:
+    def __init__(self, name):
+        font = TTFont(ROOT / "fonts" / name)
+        font.flavor = None
+        buf = io.BytesIO()
+        font.save(buf)
+        self.glyphs = font.getGlyphSet()
+        self.order = font.getGlyphOrder()
+        self.upem = font["head"].unitsPerEm
+        self.hb = hb.Font(hb.Face(buf.getvalue()))
+
+    def shape(self, s):
+        b = hb.Buffer()
+        b.add_str(s)
+        b.guess_segment_properties()
+        hb.shape(self.hb, b)
+        if any(i.codepoint == 0 for i in b.glyph_infos):
+            raise ValueError(f"missing glyph in {s!r}")
+        return b.glyph_infos, b.glyph_positions
+
+
+FACES = {
+    400: Face("ibm-plex-mono-latin-400-normal.woff2"),
+    600: Face("ibm-plex-mono-latin-600-normal.woff2"),
+    700: Face("ibm-plex-mono-latin-700-normal.woff2"),
+    "te": Face("anek-telugu-telugu-500-normal.woff2"),
 }
 
-SERIF = "'Iowan Old Style','Palatino Linotype',Palatino,Georgia,'Noto Serif','DejaVu Serif',serif"
-SANS = "-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans',Helvetica,Arial,sans-serif"
-MONO = "ui-monospace,'SF Mono','JetBrains Mono',Menlo,Consolas,'DejaVu Sans Mono',monospace"
-TELUGU = "'Noto Sans Telugu','Nirmala UI','Telugu Sangam MN','Gautami',sans-serif"
+
+def num(v):
+    return f"{v:.1f}".rstrip("0").rstrip(".")
 
 
-def e(s):
-    return escape(s)
+def measure(s, size, weight=400):
+    f = FACES[weight]
+    return sum(p.x_advance for p in f.shape(s)[1]) * size / f.upem
 
 
-def svg(w, h, body, t, label):
-    return f"""<svg xmlns="http://www.w3.org/2000/svg" width="{w}" height="{h}" viewBox="0 0 {w} {h}" role="img" aria-label="{e(label)}">
+def text(s, x, y, size, fill, weight=400, anchor="start", limit=None):
+    width = measure(s, size, weight)
+    if limit and width > limit:
+        raise ValueError(f"{s!r} is {width:.0f}px wide, limit {limit}")
+    f = FACES[weight]
+    k = size / f.upem
+    pen_x = x - width if anchor == "end" else x
+    pen = SVGPathPen(f.glyphs, ntos=num)
+    infos, positions = f.shape(s)
+    for info, pos in zip(infos, positions):
+        tf = (k, 0, 0, -k, pen_x + pos.x_offset * k, y - pos.y_offset * k)
+        f.glyphs[f.order[info.codepoint]].draw(TransformPen(pen, tf))
+        pen_x += pos.x_advance * k
+    return f'<path d="{pen.getCommands()}" fill="{fill}"/>'
+
+
+def show(body, delay):
+    return f'<g class="s" style="animation-delay:{delay:.2f}s">{body}</g>'
+
+
+def typed(s, x, y, size, fill, start, step=0.07):
+    """One group per character, so the command appears to be typed."""
+    adv = size * 0.6
+    return "".join(show(text(c, x + i * adv, y, size, fill), start + i * step)
+                   for i, c in enumerate(s) if c != " ")
+
+
+def svg(w, h, body, label):
+    return f"""<svg xmlns="http://www.w3.org/2000/svg" width="{w}" height="{h}" viewBox="0 0 {w} {h}" role="img" aria-label="{escape(label, {'"': '&quot;'})}">
 <style>
-.serif{{font-family:{SERIF}}} .sans{{font-family:{SANS}}} .mono{{font-family:{MONO}}} .te{{font-family:{TELUGU}}}
+@keyframes on{{to{{opacity:1}}}}
 @keyframes draw{{to{{stroke-dashoffset:0}}}}
-@keyframes rise{{from{{opacity:0;transform:translateY(8px)}}to{{opacity:1;transform:none}}}}
 @keyframes blink{{0%,49%{{opacity:1}}50%,100%{{opacity:0}}}}
-@keyframes pulse{{0%,100%{{opacity:1}}50%{{opacity:.35}}}}
-.k{{fill:none;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:1;animation:draw 1.6s cubic-bezier(.6,0,.2,1) forwards}}
-.r{{opacity:0;animation:rise .8s cubic-bezier(.2,.7,.2,1) forwards}}
+.s{{opacity:0;animation:on 0s linear forwards}}
+.trace{{stroke-dasharray:1;stroke-dashoffset:1;animation:draw 2.6s cubic-bezier(.55,0,.25,1) 1s forwards}}
 .cur{{animation:blink 1.1s steps(1) infinite}}
-.pulse{{animation:pulse 2.4s ease-in-out infinite}}
-@media (prefers-reduced-motion:reduce){{.k,.r{{animation:none;opacity:1;stroke-dashoffset:0}}.cur,.pulse{{animation:none}}}}
+@media (prefers-reduced-motion:reduce){{.s{{animation:none;opacity:1}}.trace{{animation:none;stroke-dashoffset:0}}.cur{{animation:none}}}}
 </style>
-<rect width="{w}" height="{h}" rx="18" fill="{t['bg']}"/>
+<rect x="0.5" y="0.5" width="{w - 1}" height="{h - 1}" rx="6" fill="{BG}" stroke="{LINE}"/>
 {body}
 </svg>
 """
 
 
+def titlebar(w, left, right=None, right_fill=DIM):
+    b = [f'<path d="M1,44 V7 a6,6 0 0 1 6,-6 H{w - 7} a6,6 0 0 1 6,6 V44Z" fill="{BAR}"/>',
+         f'<line x1="1" y1="44.5" x2="{w - 1}" y2="44.5" stroke="{LINE}"/>',
+         text(left, 28, 29, 18, DIM)]
+    if right:
+        b.append(text(right, w - 28, 29, 18, right_fill, anchor="end"))
+    return b
+
+
 # ---------------------------------------------------------------- hero
 
-def kolam(cx, cy, s, t):
-    """Pulli kolam: a diamond lattice of dots, each wrapped in a soft rhombus."""
-    rows = [1, 3, 5, 7, 5, 3, 1]
-    dots = []
-    for i, n in enumerate(rows):
-        y = cy + (i - 3) * s
-        for j in range(n):
-            dots.append((cx + (j - (n - 1) / 2) * s, y))
+BANNER = """\
+██████╗  █████╗ ███╗   ██╗███╗   ██╗██╗   ██╗
+██╔══██╗██╔══██╗████╗  ██║████╗  ██║██║   ██║
+██████╔╝███████║██╔██╗ ██║██╔██╗ ██║██║   ██║
+██╔══██╗██╔══██║██║╚██╗██║██║╚██╗██║██║   ██║
+██████╔╝██║  ██║██║ ╚████║██║ ╚████║╚██████╔╝
+╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝  ╚═══╝ ╚═════╝ """
+
+
+def banner(x, y, cw, ch):
+    """Draw ANSI-shadow art as geometry, so it needs no box-drawing font."""
+    blocks, lines = [], []
+    dx, dy = cw * 0.2, ch * 0.16
+    for r, row in enumerate(BANNER.split("\n")):
+        for c, g in enumerate(row):
+            x0, y0 = x + c * cw, y + r * ch
+            x1, y1, cx, cy = x0 + cw, y0 + ch, x0 + cw / 2, y0 + ch / 2
+            if g == "█":
+                blocks.append(f"M{num(x0)},{num(y0)}h{num(cw + .4)}v{num(ch + .4)}h{num(-cw - .4)}z")
+            elif g == "═":
+                lines += [[(x0, cy - dy), (x1, cy - dy)], [(x0, cy + dy), (x1, cy + dy)]]
+            elif g == "║":
+                lines += [[(cx - dx, y0), (cx - dx, y1)], [(cx + dx, y0), (cx + dx, y1)]]
+            elif g == "╗":
+                lines += [[(x0, cy - dy), (cx + dx, cy - dy), (cx + dx, y1)], [(x0, cy + dy), (cx - dx, cy + dy), (cx - dx, y1)]]
+            elif g == "╔":
+                lines += [[(x1, cy - dy), (cx - dx, cy - dy), (cx - dx, y1)], [(x1, cy + dy), (cx + dx, cy + dy), (cx + dx, y1)]]
+            elif g == "╝":
+                lines += [[(x0, cy + dy), (cx + dx, cy + dy), (cx + dx, y0)], [(x0, cy - dy), (cx - dx, cy - dy), (cx - dx, y0)]]
+            elif g == "╚":
+                lines += [[(x1, cy + dy), (cx - dx, cy + dy), (cx - dx, y0)], [(x1, cy - dy), (cx + dx, cy - dy), (cx + dx, y0)]]
+    shade = " ".join("M" + " L".join(f"{num(a)},{num(b)}" for a, b in seg) for seg in lines)
+    return (f'<path d="{"".join(blocks)}" fill="{GREEN}" shape-rendering="crispEdges"/>'
+            f'<path d="{shade}" fill="none" stroke="{SHADOW}" stroke-width="1.5"/>')
+
+
+TRACE = [(-3, 0), (-2, 1), (-1, 0), (0, 1), (-1, 2), (0, 3), (1, 2), (2, 1), (1, 0), (2, -1),
+         (1, -2), (0, -1), (-1, -2), (0, -3)]
+
+
+def smooth(points):
+    pts = [points[0], *points, points[-1]]
+    d = f"M{num(points[0][0])},{num(points[0][1])}"
+    for i in range(1, len(pts) - 2):
+        p0, p1, p2, p3 = pts[i - 1:i + 3]
+        c1 = (p1[0] + (p2[0] - p0[0]) / 6, p1[1] + (p2[1] - p0[1]) / 6)
+        c2 = (p2[0] - (p3[0] - p1[0]) / 6, p2[1] - (p3[1] - p1[1]) / 6)
+        d += f" C{num(c1[0])},{num(c1[1])} {num(c2[0])},{num(c2[1])} {num(p2[0])},{num(p2[1])}"
+    return d
+
+
+def attack_map(cx, cy, s):
+    """A kolam lattice read as a network: dots are hosts, red is the attack path."""
+    points = [(cx + u * s, cy + v * s) for v in range(-3, 4) for u in range(-(3 - abs(v)), 4 - abs(v))]
     r, k = s * 0.5, 0.6
     parts = []
-    order = sorted(dots, key=lambda p: (abs(p[0] - cx) + abs(p[1] - cy)))
-    for idx, (x, y) in enumerate(order):
-        d = (f"M{x:.1f},{y - r:.1f} Q{x + r * k:.1f},{y - r * k:.1f} {x + r:.1f},{y:.1f} "
-             f"Q{x + r * k:.1f},{y + r * k:.1f} {x:.1f},{y + r:.1f} "
-             f"Q{x - r * k:.1f},{y + r * k:.1f} {x - r:.1f},{y:.1f} "
-             f"Q{x - r * k:.1f},{y - r * k:.1f} {x:.1f},{y - r:.1f}Z")
-        parts.append(f'<path class="k" pathLength="1" d="{d}" stroke="{t["accent"]}" '
-                     f'stroke-width="1.6" style="animation-delay:{0.25 + idx * 0.035:.2f}s"/>')
-    R = s * 4.15
-    outer = (f"M{cx},{cy - R} Q{cx + R * .55},{cy - R * .55} {cx + R},{cy} "
-             f"Q{cx + R * .55},{cy + R * .55} {cx},{cy + R} "
-             f"Q{cx - R * .55},{cy + R * .55} {cx - R},{cy} "
-             f"Q{cx - R * .55},{cy - R * .55} {cx},{cy - R}Z")
-    parts.append(f'<path class="k" pathLength="1" d="{outer}" stroke="{t["faint"]}" '
-                 f'stroke-width="1" style="animation-delay:1.9s;animation-duration:2.4s"/>')
-    for x, y in dots:
-        parts.append(f'<circle cx="{x:.1f}" cy="{y:.1f}" r="2.6" fill="{t["text"]}"/>')
+    for x, y in points:
+        d = (f"M{num(x)},{num(y - r)} Q{num(x + r * k)},{num(y - r * k)} {num(x + r)},{num(y)} "
+             f"Q{num(x + r * k)},{num(y + r * k)} {num(x)},{num(y + r)} "
+             f"Q{num(x - r * k)},{num(y + r * k)} {num(x - r)},{num(y)} "
+             f"Q{num(x - r * k)},{num(y - r * k)} {num(x)},{num(y - r)}Z")
+        parts.append(f'<path d="{d}" fill="none" stroke="{LINE}" stroke-width="1.5"/>')
+    for x, y in points:
+        parts.append(f'<circle cx="{num(x)}" cy="{num(y)}" r="3.2" fill="{GREEN}"/>')
+    path = [(cx + u * s, cy + v * s) for u, v in TRACE]
+    parts.append(f'<path class="trace" pathLength="1" d="{smooth(path)}" fill="none" stroke="{RED}" '
+                 f'stroke-width="3" stroke-linecap="round"/>')
+    sx, sy = path[0]
+    ex, ey = path[-1]
+    parts.append(f'<circle cx="{num(sx)}" cy="{num(sy)}" r="6" fill="{RED}"/>')
+    parts.append(show(f'<circle cx="{num(ex)}" cy="{num(ey)}" r="6" fill="{RED}"/>'
+                      f'<circle cx="{num(ex)}" cy="{num(ey)}" r="14" fill="none" stroke="{RED}" stroke-width="2"/>', 3.6))
     return "\n".join(parts)
 
 
-def hero(t):
-    w, h = 1200, 440
-    b = []
-    # hairline frame + grid ticks
-    b.append(f'<rect x="0.5" y="0.5" width="{w - 1}" height="{h - 1}" rx="18" fill="none" stroke="{t["line"]}"/>')
-    b.append(f'<line x1="56" y1="78" x2="{w - 56}" y2="78" stroke="{t["line"]}"/>')
-    b.append(f'<line x1="56" y1="{h - 78}" x2="{w - 56}" y2="{h - 78}" stroke="{t["line"]}"/>')
-    # top bar
-    b.append(f'<g class="r mono" font-size="13" letter-spacing="1.5" style="animation-delay:.05s">'
-             f'<circle class="pulse" cx="62" cy="48" r="4" fill="{t["accent2"]}"/>'
-             f'<text x="76" y="52" fill="{t["muted"]}">AVAILABLE FOR CONTRACT WORK</text>'
-             f'<text x="{w - 56}" y="52" text-anchor="end" fill="{t["muted"]}">17.3850° N · 78.4867° E — HYDERABAD / BHADRACHALAM</text></g>')
-    # greeting
-    b.append(f'<g class="r" style="animation-delay:.15s">'
-             f'<text x="56" y="138" class="te" font-size="26" fill="{t["accent"]}">నమస్తే</text>'
-             f'<text x="150" y="137" class="mono" font-size="14" fill="{t["faint"]}">/ namaste — I’m Bannu</text></g>')
-    # name
-    b.append(f'<text class="r serif" x="52" y="226" font-size="88" fill="{t["text"]}" letter-spacing="-1.5" '
-             f'style="animation-delay:.25s">Parise Ashish<tspan fill="{t["accent"]}">.</tspan></text>')
-    # role
-    b.append(f'<g class="r sans" font-size="21" fill="{t["muted"]}" style="animation-delay:.4s">'
-             f'<text x="56" y="272">Python backend &amp; AI engineer. I fine-tune language models,</text>'
-             f'<text x="56" y="302">build document intelligence, and ship security platforms —</text>'
-             f'<text x="56" y="332"><tspan fill="{t["text"]}">sovereign, culturally-intelligent software for India.</tspan></text></g>')
-    # bottom ticker
-    b.append(f'<g class="r mono" font-size="14" style="animation-delay:.6s">'
-             f'<circle class="pulse" cx="60" cy="{h - 45}" r="4" fill="{t["accent"]}"/>'
-             f'<text x="74" y="{h - 40}" fill="{t["faint"]}">NOW<tspan dx="12" fill="{t["text"]}">Training PATER AI on Qwen2.5-72B</tspan></text>'
-             f'<text x="{w - 56}" y="{h - 40}" text-anchor="end" fill="{t["text"]}">MSc Computer Science · Sapienza, Rome 2027</text>'
-             f'<text x="{w - 440}" y="{h - 40}" text-anchor="end" fill="{t["faint"]}">NEXT</text></g>')
-    b.append(kolam(966, 222, 30, t))
-    return svg(w, h, "\n".join(b), t, "Parise Ashish (Bannu) — Python backend and AI engineer")
+def prompt_line(cmd, y, start):
+    x, size = 32, 23
+    return (show(text(PROMPT, x, y, size, GREEN, 600), max(start - .3, 0))
+            + typed(cmd, x + len(PROMPT) * size * .6, y, size, TEXT, start))
 
 
-# ---------------------------------------------------------------- project cards
+def hero():
+    w, h = 1200, 530
+    x, size = 32, 23
+    adv = size * .6
+    b = titlebar(w, "bannu@vega: ~")
+    b.append(text("నమస్తే", w - 28, 30, 21, DIM, "te", anchor="end"))
+    b.append(prompt_line("whoami", 88, .35))
+    b.append(show(banner(x, 108, 15.5, 25), .95))
+    b.append(show(text("Parise Ashish, cybersecurity analyst", x, 298, 29, TEXT, 600), 1.15))
+    b.append(prompt_line("cat status.log", 354, 1.5))
+    log = [("[+] ", GREEN, "Open to cybersecurity analyst roles", 2.65),
+           ("[*] ", DIM, "Preparing for CEH v14", 2.85),
+           ("[>] ", RED, "Reviewing threat detections and building the AI behind them", 3.05)]
+    for i, (tag, col, msg, d) in enumerate(log):
+        y = 392 + i * 33
+        b.append(show(text(tag, x, y, size, col, 600) + text(msg, x + 4 * adv, y, size, TEXT, limit=1090), d))
+    y = 504
+    b.append(show(text(PROMPT, x, y, size, GREEN, 600)
+                  + f'<rect class="cur" x="{num(x + len(PROMPT) * adv + 2)}" y="{y - 19}" width="13" height="24" fill="{GREEN}"/>', 3.35))
+    b.append(attack_map(980, 208, 38))
+    return svg(w, h, "\n".join(b), "Terminal: Parise Ashish (Bannu), cybersecurity analyst. "
+               "Open to cybersecurity analyst roles. Preparing for CEH v14.")
+
+
+# ---------------------------------------------------------------- project panes
 
 PROJECTS = [
-    dict(slug="pater", no="01", kind="LLM FINE-TUNING", name="PATER AI", status=("training", True),
-         lines=["Telugu Catholic theological assistant, with a", "desensitisation corpus that fixes over-refusal."],
-         stats=[("72B", "Qwen2.5 base"), ("34K", "samples · 4 tiers"), ("SFT→DPO", "QLoRA r=32")]),
-    dict(slug="kavach", no="02", kind="CYBERSECURITY", name="Kavach Cyber", status=("mvp", True),
-         lines=["Indigenous zero-trust defence platform: EDR,", "SIEM correlation and DevSecOps on one core."],
+    dict(slug="kavach", name="Kavach Cyber", status=("demo", True),
+         about="Zero-trust defence platform with EDR, SIEM correlation and DevSecOps on one core.",
          stats=[("mTLS", "agent enrolment"), ("6h", "CERT-In clock"), ("OPA", "zero-trust scoring")]),
-    dict(slug="raaga", no="03", kind="GENERATIVE AUDIO", name="Raaga.AI", status=("public", False),
-         lines=["Composes Telugu songs on authentic Carnatic", "ragas — melody, lyrics, beats and vocals."],
-         stats=[("5", "layer pipeline"), ("raga·tala", "validated theory"), ("Celery", "async render")]),
-    dict(slug="bharatdoc", no="04", kind="DOCUMENT AI", name="BharatDoc", status=("api", False),
-         lines=["KYC extraction API on PaddleOCR with production", "validators for Indian identity documents."],
-         stats=[("PAN", "+ IFSC"), ("GSTIN", "Verhoeff check"), ("Aadhaar", "auto-masking")]),
-    dict(slug="ministerium", no="05", kind="COMMUNITY TECH", name="Ministerium", status=("platform", False),
-         lines=["Telugu-first parish management platform for", "the Diocese of Khammam."],
-         stats=[("Django", "+ React"), ("4", "LLM providers"), ("తెలుగు", "first")]),
-    dict(slug="formator", no="06", kind="AI COMPANION", name="Formator AI", status=("public", False),
-         lines=["Chat companion for seminary formators —", "theology, philosophy, accompaniment."],
-         stats=[("Next.js", "+ Groq"), ("0", "databases"), ("$0", "to run")]),
+    dict(slug="vega", name="VEGA-OS", status=("building", True),
+         about="Agent-native OS where a non-AI broker checks every action a model asks to take.",
+         stats=[("VARL", "agent runtime"), ("Rust", "microkernel"), ("SELinux", "MLS policy")]),
+    dict(slug="jessy", name="Jessy", status=("building", True),
+         about="Voice-first home network assistant that keeps personal data away from cloud models.",
+         stats=[("Home lab", "self-hosted"), ("Voice", "with chat option"), ("Memory", "learns from use")]),
+    dict(slug="pater", name="PATER AI", status=("training", True),
+         about="Telugu Catholic theological assistant, with a corpus that fixes over-refusal.",
+         stats=[("72B", "Qwen2.5 base"), ("34K", "samples, 4 tiers"), ("SFT, DPO", "QLoRA r=32")]),
+    dict(slug="bharatdoc", name="BharatDoc", status=("api", False),
+         about="KYC extraction API on PaddleOCR with validators for Indian identity documents.",
+         stats=[("PAN", "and IFSC"), ("GSTIN", "checksum check"), ("Aadhaar", "auto-masking")]),
+    dict(slug="raaga", name="Raaga.AI", status=("public", False),
+         about="Composes Telugu songs on Carnatic ragas with melody, lyrics, beats and vocals.",
+         stats=[("5", "layer pipeline"), ("Raga, tala", "validated theory"), ("Celery", "async render")]),
+    dict(slug="formator", name="Formator AI", status=("public", False),
+         about="Chat companion for seminary formators: theology, philosophy, accompaniment.",
+         stats=[("Next.js", "with Groq"), ("0", "databases"), ("$0", "to run")]),
+    dict(slug="ministerium", name="Ministerium", status=("platform", False),
+         about="Telugu-first parish management platform for the Diocese of Khammam.",
+         stats=[("Django", "with React"), ("4", "LLM providers"), ("తెలుగు", "first")]),
 ]
 
 
-def card(p, t):
-    w, h = 600, 300
+def card(p):
+    w, h = 600, 290
+    m = 28
+    inner = w - 2 * m
     st, live = p["status"]
-    b = [f'<rect x="0.5" y="0.5" width="{w - 1}" height="{h - 1}" rx="18" fill="{t["surface"]}" stroke="{t["line"]}"/>',
-         f'<rect x="0" y="40" width="3" height="28" fill="{t["accent"]}"/>',
-         f'<text x="32" y="60" class="mono" font-size="13" letter-spacing="1.6" fill="{t["muted"]}">'
-         f'<tspan fill="{t["accent"]}">{p["no"]}</tspan>  ·  {p["kind"]}</text>']
-    pill_w = 22 + len(st) * 8.4 + 16
-    px = w - 32 - pill_w
-    b.append(f'<rect x="{px:.1f}" y="40" width="{pill_w:.1f}" height="28" rx="14" fill="none" stroke="{t["line"]}"/>')
-    pulse = 'class="pulse" ' if live else ""
-    b.append(f'<circle {pulse}cx="{px + 15:.1f}" cy="54" r="3.5" '
-             f'fill="{t["accent2"] if live else t["faint"]}"/>')
-    b.append(f'<text x="{px + 26:.1f}" y="58.5" class="mono" font-size="12.5" letter-spacing="1.2" fill="{t["muted"]}">{st.upper()}</text>')
-    b.append(f'<text x="30" y="122" class="serif" font-size="42" letter-spacing="-.5" fill="{t["text"]}">{e(p["name"])}</text>')
-    for i, ln in enumerate(p["lines"]):
-        b.append(f'<text x="32" y="{158 + i * 25}" class="sans" font-size="17" fill="{t["muted"]}">{e(ln)}</text>')
-    b.append(f'<line x1="32" y1="212" x2="{w - 32}" y2="212" stroke="{t["line"]}"/>')
-    col = (w - 64) / 3
+    b = titlebar(w, f"~/projects/{p['slug']}", f"[{st}]", GREEN if live else DIM)
+    b.append(text(p["name"], m - 1, 102, 44, GREEN, 700, limit=inner))
+    lines = textwrap.wrap(p["about"], 43, break_on_hyphens=False)
+    if len(lines) > 2:
+        raise ValueError(p["slug"])
+    for i, ln in enumerate(lines):
+        b.append(text(ln, m, 144 + i * 29, 21, TEXT, limit=inner))
+    col = inner / 3
     for i, (v, lbl) in enumerate(p["stats"]):
-        x = 32 + i * col
-        if i:
-            b.append(f'<line x1="{x - 14:.1f}" y1="230" x2="{x - 14:.1f}" y2="272" stroke="{t["line"]}"/>')
-        cls = "te" if any("ఀ" <= c <= "౿" for c in v) else "mono"
-        b.append(f'<text x="{x:.1f}" y="250" class="{cls}" font-size="21" font-weight="600" fill="{t["accent"]}">{e(v)}</text>')
-        b.append(f'<text x="{x:.1f}" y="272" class="sans" font-size="13" fill="{t["muted"]}">{e(lbl)}</text>')
-    return svg(w, h, "\n".join(b), t, f'{p["name"]} — {" ".join(p["lines"])}')
+        x = m + i * col
+        face = "te" if any("ఀ" <= c <= "౿" for c in v) else 600
+        b.append(text(v, x, 232, 24, GREEN, face, limit=col - 6))
+        b.append(text(lbl, x, 260, 16, DIM, limit=col))
+    return svg(w, h, "\n".join(b), f'{p["name"]}: {p["about"]}')
 
 
-# ---------------------------------------------------------------- stack
+# ---------------------------------------------------------------- toolbox
 
 STACK = [
-    ("Models & ML", ["PyTorch", "Hugging Face", "QLoRA · PEFT", "SFT · DPO", "PaddleOCR", "OpenCV"]),
-    ("Backend", ["Python", "FastAPI", "Django · DRF", "Celery", "SQLAlchemy 2", "Alembic"]),
-    ("Data & Infra", ["PostgreSQL", "Redis", "MinIO · S3", "Docker", "Nginx", "GitHub Actions"]),
-    ("Security", ["mTLS", "Open Policy Agent", "YARA · eBPF", "Semgrep · Bandit", "Grype", "Linux"]),
-    ("Interface", ["React 19", "Next.js", "TypeScript", "Vite", "PWA", "Groq · Ollama"]),
+    ("security/", ["mTLS", "Open Policy Agent", "YARA, eBPF", "Semgrep, Bandit", "Grype", "SELinux, seccomp"]),
+    ("backend/", ["Python", "FastAPI", "Django, DRF", "Celery", "SQLAlchemy 2", "Alembic"]),
+    ("models/", ["PyTorch", "Hugging Face", "QLoRA, PEFT", "SFT, DPO", "PaddleOCR", "OpenCV"]),
+    ("infra/", ["PostgreSQL", "Redis", "MinIO, S3", "Docker", "Nginx", "GitHub Actions"]),
+    ("ui/", ["React 19", "Next.js", "TypeScript", "Vite", "PWA", "Groq, Ollama"]),
 ]
 
 
-def stack(t):
-    w, h = 1200, 330
-    b = [f'<rect x="0.5" y="0.5" width="{w - 1}" height="{h - 1}" rx="18" fill="none" stroke="{t["line"]}"/>']
-    col = (w - 112) / len(STACK)
+def stack():
+    w, h = 1200, 372
+    m = 32
+    col = (w - 2 * m) / len(STACK)
+    b = titlebar(w, "bannu@vega: ~/toolbox")
+    b.append(text(PROMPT, m, 86, 20, GREEN, 600))
+    b.append(text("ls -R", m + len(PROMPT) * 12, 86, 20, TEXT))
     for i, (head, items) in enumerate(STACK):
-        x = 56 + i * col
-        if i:
-            b.append(f'<line x1="{x - 20:.1f}" y1="48" x2="{x - 20:.1f}" y2="{h - 48}" stroke="{t["line"]}"/>')
-        b.append(f'<g class="r" style="animation-delay:{0.08 * i:.2f}s">'
-                 f'<text x="{x:.1f}" y="66" class="mono" font-size="12.5" letter-spacing="1.6" fill="{t["accent"]}">'
-                 f'{i + 1:02d}</text>'
-                 f'<text x="{x:.1f}" y="98" class="serif" font-size="24" fill="{t["text"]}">{e(head)}</text>')
+        x = m + i * col
+        b.append(text(head, x, 134, 23, GREEN, 700, limit=col - 8))
         for j, it in enumerate(items):
-            b.append(f'<text x="{x:.1f}" y="{142 + j * 30}" class="sans" font-size="16" fill="{t["muted"]}">{e(it)}</text>')
-        b.append('</g>')
-    return svg(w, h, "\n".join(b), t, "Tech stack: " + "; ".join(f"{h_}: {', '.join(i)}" for h_, i in STACK))
+            b.append(text("- " + it, x, 172 + j * 31, 18, TEXT, limit=col - 6))
+    return svg(w, h, "\n".join(b), "Toolbox: " + "; ".join(f"{a} {', '.join(i)}" for a, i in STACK))
 
 
 def main():
     OUT.mkdir(exist_ok=True)
-    for name, t in THEMES.items():
-        (OUT / f"hero-{name}.svg").write_text(hero(t), encoding="utf-8")
-        (OUT / f"stack-{name}.svg").write_text(stack(t), encoding="utf-8")
-        for p in PROJECTS:
-            (OUT / f"card-{p['slug']}-{name}.svg").write_text(card(p, t), encoding="utf-8")
+    (OUT / "hero.svg").write_text(hero(), encoding="utf-8")
+    (OUT / "stack.svg").write_text(stack(), encoding="utf-8")
+    for p in PROJECTS:
+        (OUT / f"card-{p['slug']}.svg").write_text(card(p), encoding="utf-8")
     print(f"wrote {len(list(OUT.glob('*.svg')))} files to {OUT}")
 
 
